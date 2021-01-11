@@ -3,7 +3,7 @@ package encryption
 import (
 	"crypto/aes"
 	"crypto/cipher"
-	"crypto/sha256"
+	"crypto/md5"
 	"encoding/base64"
 	"encoding/hex"
 	"io/ioutil"
@@ -17,9 +17,9 @@ type Encryption struct {
 	Filename string
 }
 
-// MakeHashValue creates a new SHA256 hash
+// MakeHashValue creates a new MD5 hash
 func MakeHashValue(text string) string {
-	hasher := sha256.New()
+	hasher := md5.New()
 	hasher.Write([]byte(text))
 	return hex.EncodeToString(hasher.Sum(nil))
 }
