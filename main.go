@@ -65,7 +65,7 @@ func main() {
 		"cgm", "tif", "tiff", "nef", "psd", "ai", "svg", "djvu", "m4u", "m3u",
 		"csv", "rtf", "wks", "wk1", "pdf", "dwg", "onetoc2", "snt",
 		"doc", "docx", "xls", "xlsx", "ppt", "dat",
-		"gpg", "aes", "arc", "paq", "bz2", "tbk", "bak", "tar", "tgz", "gz",
+		"gpg", "aes", "arc", "paq", "bz2", "tbk", "bak", "bac", "tar", "tgz", "gz",
 		"hwp", "62", "sxi", "sti", "sldx", "sldm", "vdi", "vmdk", "vmx",
 		"jar", "java", "rb", "asp", "php", "jsp", "brd", "sch", "dch", "dip", "pl",
 		"jpeg", "jpg", "docb", "docm", "dot", "dotm", "dotx", "xlsm",
