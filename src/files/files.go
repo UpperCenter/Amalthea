@@ -76,6 +76,7 @@ func (f *Files) ScanToEncrypt() ([]string, error) {
 // ScanToDecrypt scans all valid files to encrypt
 func (f *Files) ScanToDecrypt() ([]string, error) {
 	var files []string
+	// Begin "walking" from `rootDir` to get all available folders & subfolders to decrypt
 	err := filepath.Walk(f.rootDir, func(path string, info os.FileInfo, err error) error {
 		stat, error := os.Stat(path)
 		/*
@@ -91,6 +92,7 @@ func (f *Files) ScanToDecrypt() ([]string, error) {
 			return error
 		}
 		if !stat.IsDir() {
+			// If the file has the encryption extension, add it to the array
 			if strings.HasSuffix(path, ".AmaltheaEnc") {
 				files = append(files, path)
 			}
