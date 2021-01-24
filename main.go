@@ -6,8 +6,8 @@ package main
 	Developer for IY3D602 - Advanced Systems Security
 
 	Use:
-		Obfuscated: `env GOOS=windows GOARCH=amd64 garble build .`
-		Obfuscated with no logging: `env GOOS=windows GOARCH=amd64 garble -tiny build .`
+		Obfuscated: `env GOOS=windows GOARCH=amd64 garble -seed=random -literals -debugdir=out build .    `
+		Obfuscated with no logging: `env GOOS=windows GOARCH=amd64 garble -tiny -seed=random -literals -debugdir=out build .    `
 		Normal: `env GOOS=windows GOARCH=amd64 go build .`
 
 */
