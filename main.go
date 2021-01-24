@@ -133,6 +133,7 @@ func main() {
 	// Prompt user for password to decrypt
 	color.Warn.Println(message)
 
+	// TODO: Accept Password on the same line as the prompt?
 	var password string
 	fmt.Scanln(&password)
 	efs := files.NewFiles(rootDir, fileExtensions, size)
