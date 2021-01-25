@@ -1,14 +1,5 @@
 package files
 
-/*
-
-	This file has been taken almost "word for word" from
-	https://github.com/Null-byte-00/Psycho/blob/master/psycho/src/files/files.go
-	The file here has been commented as proof I know what it is doing.
-	Additional error handling has been added to assist debugging.
-
-*/
-
 import (
 	"os"
 	"path/filepath"
