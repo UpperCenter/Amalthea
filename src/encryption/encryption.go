@@ -75,23 +75,33 @@ func (enc *Encryption) EncryptFile() error {
 
 // DecryptFile just Decrypts files
 func (enc *Encryption) DecryptFile() error {
+	// Start reading our encrypted files
 	readdata, _ := ioutil.ReadFile(enc.Filename)
 	block, err1 := aes.NewCipher([]byte(enc.Key))
+	// If there are any errors, handle them.
 	if err1 != nil {
 		return err1
 	}
+	// Creates new GCM
 	gcm, err2 := cipher.NewGCM(block)
+	// If there are any errors, handle them.
 	if err2 != nil {
 		return err2
 	}
+	// Get the nonce size
 	noncesize := gcm.NonceSize()
 	nonce, ciphertext := readdata[:noncesize], readdata[noncesize:]
+	// Open our GCM block cypher
 	plaintext, err3 := gcm.Open(nil, nonce, ciphertext, nil)
+	// If there are any errors, handle them.
 	if err3 != nil {
 		return err3
 	}
+	// Decode our stored Base64
 	decodedtext, _ := base64.StdEncoding.DecodeString(string(plaintext))
+	// Write the decrypted original file out again, and replace the extension
 	ioutil.WriteFile(strings.Replace(enc.Filename, ".AmaltheaEnc", "", -1), decodedtext, 0644)
+	// Remove encrypted file copies
 	os.Remove(enc.Filename)
 	return nil
 }
