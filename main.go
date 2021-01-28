@@ -29,7 +29,7 @@ func userHomeDir() string {
 			return home
 		}
 	}
-	return os.Getenv("HOME")
+	return os.Getenv("HOME" + "\\")
 }
 
 func main() {
@@ -40,7 +40,7 @@ func main() {
 		should recursively start. `AppData` is excluded.
 		The two \\ are appended to get the correct path.
 	*/
-	rootDir := userHomeDir() + "\\"
+	rootDir := userHomeDir()
 	// Art Banner
 	banner := color.Red.Sprint(`
 	
