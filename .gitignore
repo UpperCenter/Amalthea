@@ -20,3 +20,6 @@ vendor/
 # VS Code
 .idea
 .vscode
+
+# Compiled Windows Resources File
+resource.syso

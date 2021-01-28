@@ -1,5 +1,7 @@
 package main
 
+//go:generate goversioninfo -icon=icon.ico -manifest=amalthea.exe.manifest -o=resource.syso
+
 // Import all the required packages
 import (
 	"fmt"
