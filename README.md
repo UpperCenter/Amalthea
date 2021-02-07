@@ -9,7 +9,7 @@ _Compile Arguments:_
 * Normal: `env GOOS=windows GOARCH=amd64 go build .`
 
 > 32bit Compile:
-* Obfuscated: `env GOOS=windows GOARCH=386 garble -seed=random -literals -debugdir=out build .
+* Obfuscated: `env GOOS=windows GOARCH=386 garble -seed=random -literals -debugdir=out build .`
 * Obfuscated with tiny: `env GOOS=windows GOARCH=386 garble -tiny -seed=random -literals debugdir=out build .`
 * Normal: `env GOOS=windows GOARCH=386 go build .`
 
